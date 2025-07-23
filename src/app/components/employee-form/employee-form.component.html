@@ -1,0 +1,96 @@
+<div class="modal" [class.show]="isVisible" [style.display]="isVisible ? 'block' : 'none'">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="onClose()"></button>
+      </div>
+      
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body">
+          <!-- Name Field -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name *</label>
+            <input 
+              type="text" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('name')"
+              id="name" 
+              formControlName="name"
+              placeholder="Enter employee name">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+              Name is required.
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email *</label>
+            <input 
+              type="email" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('email')"
+              id="email" 
+              formControlName="email"
+              placeholder="Enter email address">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+              <div *ngIf="employeeForm.get('email')?.errors?.['required']">
+                Email is required.
+              </div>
+              <div *ngIf="employeeForm.get('email')?.errors?.['email']">
+                Please enter a valid email address.
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Field -->
+          <div class="mb-3">
+            <label for="mobile" class="form-label">Mobile *</label>
+            <input 
+              type="tel" 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('mobile')"
+              id="mobile" 
+              formControlName="mobile"
+              placeholder="Enter mobile number (e.g., 01012345678)">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('mobile')">
+              <div *ngIf="employeeForm.get('mobile')?.errors?.['required']">
+                Mobile number is required.
+              </div>
+              <div *ngIf="employeeForm.get('mobile')?.errors?.['pattern']">
+                Mobile must be 11 digits and start with 010, 011, or 012.
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Field -->
+          <div class="mb-3">
+            <label for="address" class="form-label">Address *</label>
+            <textarea 
+              class="form-control"
+              [class.is-invalid]="isFieldInvalid('address')"
+              id="address" 
+              formControlName="address"
+              rows="3"
+              placeholder="Enter full address"></textarea>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('address')">
+              Address is required.
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onClose()">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">
+            {{ isEditMode ? 'Update Employee' : 'Add Employee' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="isVisible"></div>
