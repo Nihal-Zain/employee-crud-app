@@ -112,10 +112,12 @@ export class EmployeeIndexComponent implements OnInit {
   toggleAllChecked(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     this.allChecked = checked;
-    for (const emp of this.paginatedEmployees) {
+    // Apply to all employees across all pages
+    for (const emp of this.employees) {
       const key = emp.id != null ? emp.id.toString() : '';
       this.checkedRows[key] = checked;
     }
+    this.updateAllChecked();
   }
 
   openAddModal(): void {
