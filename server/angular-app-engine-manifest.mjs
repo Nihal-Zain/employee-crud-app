@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: '/employee-crud-app',
   supportedLocales: {
   "en-US": ""
 },
